@@ -78,7 +78,7 @@ fieldset legend {
 }
 
 fieldset:focus-within legend {
-  color: #1f8459;
+  color: #59c07b;
   font-weight: 700;
 }
 
@@ -110,7 +110,7 @@ select:invalid {
 
 input:focus,
 select:focus {
-  border: 1.5px solid #1f8459;
+  border: 1.5px solid #59c07b;
 }
 
 .inputs-row {
@@ -135,7 +135,7 @@ form button {
   border: none;
   font-size: 0.87rem;
   color: #ffffff;
-  background-color: #1f8459;
+  background-color: #59c07b;
   font-weight: 700;
   padding: 1rem 1.25rem;
   cursor: pointer;
@@ -216,6 +216,10 @@ aside ul {
   display: flex;
   align-items: center;
   height: 38px;
+
+  background-color: #ecf9f0;
+  padding: 2rem 1rem;
+  border-radius: 8px;
 }
 
 .expense img:first-child {
@@ -297,6 +301,10 @@ aside ul {
     width: 100%;
     height: auto;
     overflow: auto;
+  }
+
+  .logo {
+    margin: 2rem;
   }
 }
 
