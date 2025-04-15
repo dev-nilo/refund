@@ -8,11 +8,11 @@ const amount = document.getElementById("amount");
 const expenseQuantity = document.querySelector("aside header p span");
 const expenseTotal = document.querySelector("aside header h2");
 
+let expenses = []; // Array global que guarda as despesas
+
 amount.oninput = () => {
   let value = amount.value.replace(/\D/g, "");
-
   value = Number(value) / 100;
-
   amount.value = formatCurrencyBRL(value);
 };
 
@@ -21,7 +21,6 @@ function formatCurrencyBRL(value) {
     style: "currency",
     currency: "BRL",
   });
-
   return value;
 }
 
@@ -42,6 +41,9 @@ form.onsubmit = (event) => {
     created_at: new Date(),
   };
 
+  // Adiciona a nova despesa no array e salva no localStorage
+  expenses.push(newExpense);
+  saveExpenses();
   addExpense(newExpense);
 };
 
@@ -49,6 +51,7 @@ function addExpense(newExpense) {
   try {
     const expenseItem = document.createElement("li");
     expenseItem.classList.add("expense");
+    expenseItem.setAttribute("data-id", newExpense.id); // Define o id no elemento
 
     const expenseIcon = document.createElement("img");
     expenseIcon.setAttribute("src", `img/${newExpense.category_id}.svg`);
@@ -67,7 +70,7 @@ function addExpense(newExpense) {
     expenseAmount.classList.add("expense-amount");
     expenseAmount.innerHTML = `
         <small>R$</small>${newExpense.amount.toUpperCase().replace("R$", "")}
-        `;
+    `;
 
     const removeExpense = document.createElement("img");
     removeExpense.classList.add("remove-icon");
@@ -120,10 +123,15 @@ function updateTotal() {
 expenseList.addEventListener("click", function (event) {
   if (event.target.classList.contains("remove-icon")) {
     const item = event.target.closest(".expense");
+    // Recupera o ID da despesa removida
+    const expenseId = Number(item.getAttribute("data-id"));
 
+    // Remove o item da interface
     item.remove();
+    // Remove a despesa do array e atualiza o localStorage
+    expenses = expenses.filter((exp) => exp.id !== expenseId);
+    saveExpenses();
   }
-
   updateTotal();
 });
 
@@ -134,3 +142,20 @@ function clearForm() {
 
   expense.focus();
 }
+
+// Função que salva o array de despesas no localStorage
+function saveExpenses() {
+  localStorage.setItem("expenses", JSON.stringify(expenses));
+}
+
+// Função que carrega as despesas do localStorage
+function loadExpenses() {
+  const data = localStorage.getItem("expenses");
+  if (data) {
+    expenses = JSON.parse(data);
+    expenses.forEach((exp) => addExpense(exp));
+  }
+}
+
+// Carrega as despesas salvas assim que a página é carregada
+loadExpenses();
