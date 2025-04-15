@@ -23,14 +23,6 @@ git clone https://github.com/dev-nilo/refund.git
 cd refund
 ```
 
-## 📁 Project Structure
-
-refund/
-├── index.html       # Main HTML file
-├── styles.css       # Application styling
-├── script.js        # Form behavior and validation
-└── img/             # Image assets
-
 ## 🤝 Contributing
 Contributions are welcome! Feel free to fork the project, make your changes, and open a pull request.
 
